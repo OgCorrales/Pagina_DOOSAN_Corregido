@@ -6,7 +6,7 @@
     <title>Manual Técnico - Control, Protecciones e Instrumentación</title>
     <style>
         * { box-sizing: border-box; } 
-        
+
         :root {
             --primary-color: #77ACA2; 
             --primary-dark: #5a877e; 
@@ -15,14 +15,14 @@
             --text-color: #333;
             --card-bg: #ffffff;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            line-height: 1.8;
             font-size: 16px;
         }
 
@@ -33,9 +33,14 @@
             padding: 1.5rem 1rem;
             border-bottom: 5px solid var(--secondary-color);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 1px; }
+        header h1 { 
+            margin: 0; 
+            font-size: 1.6rem; 
+            letter-spacing: 1px;
+        }
 
         .container {
             max-width: 950px;
@@ -43,7 +48,7 @@
             padding: 0 15px;
         }
 
-        /* ----- ESTILOS DEL CUESTIONARIO ----- */
+        /* ----- ESTILOS DEL CUESTIONARIO Y CHECKLISTS ----- */
         #survey-container {
             background: var(--card-bg);
             padding: 30px;
@@ -61,11 +66,13 @@
             margin-bottom: 30px;
         }
 
+        .loto-header h3 { margin-top: 0; display: flex; align-items: center; gap: 10px;}
+
         .checklist-container {
             background-color: #f0f7f4;
             border: 1px solid #c3e6cb;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 25px;
         }
 
@@ -73,55 +80,243 @@
             display: flex;
             align-items: flex-start;
             background: white;
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
             border: 1px solid #d6d8db;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .check-item input[type="checkbox"] { margin-right: 15px; width: 20px; height: 20px; accent-color: var(--primary-color); flex-shrink: 0; }
+        .check-item:hover { background-color: #e9ecef; }
 
-        .question { margin-bottom: 20px; padding: 15px; background-color: #f9fafb; border-radius: 8px; border: 1px solid #e1e4e8; }
-        .question h4 { margin-top: 0; color: var(--primary-dark); }
-        .options label { display: block; margin-bottom: 10px; cursor: pointer; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 6px; }
-        .options input { margin-right: 10px; transform: scale(1.2); }
+        .check-item input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 15px;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .question { 
+            margin-bottom: 25px; 
+            padding: 15px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e1e4e8;
+        }
+
+        .question h4 { 
+            margin-top: 0;
+            margin-bottom: 15px; 
+            color: var(--primary-dark); 
+            font-size: 1.1rem;
+        }
+
+        .options label { 
+            display: block; 
+            margin-bottom: 12px; 
+            cursor: pointer; 
+            padding: 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .options label:hover {
+            background: #eef2fa;
+            border-color: var(--primary-color);
+        }
+
+        .options input {
+            margin-right: 10px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
 
         .btn-submit {
-            background-color: var(--primary-color); color: white; border: none; padding: 16px 25px;
-            font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 12px rgba(119, 172, 162, 0.4);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-        .btn-success { background-color: #28a745; }
 
-        #error-msg { display: none; background-color: var(--secondary-color); color: white; text-align: center; padding: 15px; border-radius: 8px; margin-top: 25px; font-weight: bold; cursor: pointer; }
+        .btn-submit:hover { 
+            background-color: var(--primary-dark); 
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        #error-msg {
+            display: none;
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(227, 0, 15, 0.3);
+        }
 
         /* ----- ESTILOS DEL MANUAL ----- */
         #manual-container { display: none; }
-        .section-card { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        h2 { color: var(--primary-dark); border-bottom: 3px solid #e1e4e8; padding-bottom: 10px; margin-top: 0; }
-        h3 { color: var(--primary-dark); font-size: 1.1rem; }
-        
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem; }
-        th, td { border: 1px solid #e1e4e8; padding: 10px; text-align: left; }
-        th { background-color: var(--primary-color); color: white; }
+
+        .section-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 35px;
+            overflow: hidden; 
+        }
+
+        h2 { 
+            color: var(--primary-dark); 
+            border-bottom: 3px solid #e1e4e8; 
+            padding-bottom: 10px; 
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 750px; 
+        }
+
+        th, td { 
+            border: 1px solid #e1e4e8; 
+            padding: 12px; 
+            text-align: left; 
+            vertical-align: top;
+        }
+
+        th { 
+            background-color: var(--primary-color); 
+            color: white; 
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
         tr:nth-child(even) { background-color: #f8f9fa; }
 
         .img-placeholder {
-            background-color: #f5f9f8; border: 2px dashed var(--primary-color); border-radius: 8px;
-            padding: 15px; text-align: center; margin: 20px 0;
+            background-color: #f5f9f8;
+            border: 2px dashed var(--primary-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 25px 0;
+            transition: transform 0.3s;
         }
-        .img-placeholder img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .img-instruction { color: var(--primary-color); font-weight: bold; font-size: 0.85rem; margin-bottom: 10px; background: white; padding: 5px; border-radius: 4px; display: inline-block; border: 1px solid #ddd; }
 
-        .step-block { background: #fdfdfd; border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 0 8px 8px 0; }
-        ul { padding-left: 20px; margin: 10px 0; }
-        li { margin-bottom: 5px; }
+        .img-placeholder:hover {
+            transform: scale(1.02);
+        }
 
+        .img-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .img-instruction {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px solid #ddd;
+        }
+        
+        /* Grid para las pantallas del APM303 */
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .screens-grid .img-placeholder {
+            margin: 0; /* Elimina el margen vertical para que se vea ordenado en la grilla */
+            padding: 15px;
+        }
+
+        .step-block {
+            background: #fdfdfd;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .step-block h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-block p {
+            margin-bottom: 0;
+            text-align: justify;
+        }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        /* ----- MEDIA QUERIES PARA CELULARES ----- */
         @media (max-width: 768px) {
-            .container { margin: 10px auto; padding: 0 10px; }
-            .section-card { padding: 15px; }
-            table { display: block; overflow-x: auto; white-space: nowrap; }
+            body { font-size: 15px; }
+            .container { margin: 15px auto; padding: 0 10px; }
+            #survey-container, .section-card { padding: 15px; }
+            .btn-submit { padding: 15px 10px; font-size: 1.1rem; }
+            .options label { padding: 15px 12px; } 
+            .check-item { padding: 15px 10px; }
+            .loto-header { padding: 15px; }
+            header h1 { font-size: 1.3rem; }
+            h2 { font-size: 1.15rem; flex-wrap: wrap; }
+            table th, table td { font-size: 0.9rem; padding: 10px; }
+            .step-block { padding: 15px; border-left-width: 3px; }
         }
     </style>
 </head>
@@ -137,24 +332,26 @@
         <!-- ================= ENCUESTA DE SEGURIDAD ================= -->
         <div id="survey-container">
             <div class="loto-header">
-                <h3>🛑 BARRERA DE SEGURIDAD</h3>
-                <p>Validación de EPP y LOTO obligatoria para intervenir APM303, sensores y gobernador. Dotación mínima: <strong>2 personas</strong>.</p>
+                <h3>🛑 BARRERA DE SEGURIDAD OBLIGATORIA</h3>
+                <p>El Sistema de Control, Protecciones e Instrumentación está compuesto por los <strong>sensores de presión y temperatura, regulador de velocidad, parada de emergencia y el tablero</strong>. Para desbloquear el manual técnico de estos subconjuntos, el operador debe aprobar la validación de EPP y Procedimientos. Toda intervención requiere estrictamente una dotación de <strong>2 personas</strong>.</p>
             </div>
 
             <div style="margin-bottom: 30px;">
-                <h4 style="color: var(--primary-dark); margin-bottom: 10px;">📋 Checklist de EPP</h4>
+                <h4 style="color: var(--primary-dark); margin-bottom: 10px;">📋 Verificación de EPP e Indumentaria Personal</h4>
                 <div class="checklist-container">
-                    <label class="check-item"><input type="checkbox" class="epp-check"> <span>Overol ajustado y calzado dieléctrico.</span></label>
-                    <label class="check-item"><input type="checkbox" class="epp-check"> <span>Guantes antiestáticos (ESD) y guantes térmicos.</span></label>
-                    <label class="check-item"><input type="checkbox" class="epp-check"> <span>Protección facial y auditiva.</span></label>
-                    <label class="check-item"><input type="checkbox" class="epp-check"> <span>Retiro de metales (anillos/relojes) y cabello recogido.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Ropa de trabajo:</strong> Overol de algodón ajustado, sin mangas sueltas ni desgarros.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Calzado:</strong> Zapatos de seguridad dieléctricos y antideslizantes.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Manos:</strong> Pulsera o guantes antiestáticos (ESD) para el panel APM303, y guantes térmicos/cuero para extraer sensores del bloque.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Rostro y Oídos:</strong> Gafas de seguridad o pantalla facial clara, y protección auditiva obligatoria en la sala de máquinas.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Metales:</strong> Retiro absoluto de anillos, relojes, collares, pulseras y aros.</span></label>
+                    <label class="check-item"><input type="checkbox" class="epp-check"> <span><strong>Cabello:</strong> Todo cabello largo (hombres y mujeres) recogido estrictamente hacia atrás y contenido bajo cofia o casco.</span></label>
                 </div>
             </div>
 
             <form id="quiz-form">
-                <h4 style="color: var(--primary-dark); margin-bottom: 10px;">📝 Test de Riesgos</h4>
+                <h4 style="color: var(--primary-dark); margin-bottom: 10px;">📝 Evaluación de Riesgos: Instrumentación y LOTO</h4>
                 <div id="questions-wrapper"></div>
-                <button type="button" class="btn-submit" onclick="checkAnswers()">Firmar Permisos y Acceder al Manual</button>
+                <button type="button" class="btn-submit" onclick="checkAnswers()">Firmar Permisos y Acceder al Manual Técnico</button>
             </form>
             <div id="error-msg" onclick="loadQuiz()"></div>
         </div>
@@ -162,119 +359,178 @@
         <!-- ================= MANUAL TÉCNICO ================= -->
         <div id="manual-container">
 
-            <div class="img-placeholder" style="border: none; background: transparent; padding: 0;">
-                <img src="generador_sdmo.jpg" alt="Grupo Electrógeno Kohler SDMO D330">
+            <div class="img-placeholder" style="border: none; background: transparent; padding: 0; margin-bottom: 20px;">
+                <img src="generador_sdmo.jpg" alt="Grupo Electrógeno Kohler SDMO D330" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px;">
             </div>
 
-            <!-- 1. ENERGÍAS Y HERRAMIENTAS (Resumido) -->
+            <!-- 1. HERRAMIENTAS Y HH -->
             <div class="section-card">
-                <h2>⚙️ 1. Preparación y Riesgos Críticos</h2>
+                <h2>🛠️ 1. Tareas, Horas-Hombre y Requerimiento de Herramientas</h2>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>Tarea de Mantenimiento Integral</th>
+                            <th>Dotación Mínima</th>
+                            <th>Duración (h)</th>
+                            <th>Horas-Hombre (HH)</th>
+                        </tr>
+                        <tr>
+                            <td>Diagnóstico de cuadro de control, limpieza de placas, calibración micrométrica de regulador de velocidad, sustitución y torque de sensores del bloque.</td>
+                            <td>1 Eléctrico/Inst. <br> 1 Mecánico</td>
+                            <td>2.0 h</td>
+                            <td>4.0 HH</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 0.85rem; color: #666; font-style: italic; margin-top: 10px;">*Nota: El origen de las estimaciones de Horas-Hombre (HH) corresponde a un cálculo analítico propio del grupo, combinando la medición directa de accesibilidad física en el laboratorio de máquinas y utilizando como referencia los parámetros de la literatura técnica de Dev, Saha y Bruce (2022).</p>
+                </div>
+
+                <h3 style="color: var(--primary-dark); font-size: 1.1rem; margin-top: 20px;">Especificación Estricta de Herramientas e Instrumentos</h3>
                 <ul>
-                    <li><strong>LOTO y Eléctrica:</strong> Desconectar borne negativo (-) de batería para evitar arranque al "barrar" el motor.</li>
-                    <li><strong>Presión de Fluidos:</strong> Despresurizar lento. Riesgo de inyección subcutánea cerca del múltiple.</li>
-                    <li><strong>Térmica:</strong> Solicitar Permiso en Caliente si hay que aplicar soplete a sensores agripados.</li>
+                    <li><strong>Instrumentos de Medición (Requieren Certificado de Calibración Vigente):</strong>
+                        <ul>
+                            <li>Multímetro digital True-RMS para diagnóstico de continuidad en placas y relés.</li>
+                            <li>Calibrador de lazos de corriente (4-20mA) para simulación inyectada de parámetros de sensores hacia el APM303.</li>
+                            <li>Juego de <strong>Galgas de Espesores (Feeler Gauge) de 0.05 a 1.0 mm</strong>, vitales para el ajuste de la luz libre (Air gap) del sensor magnético.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Herramientas Genéricas y Aisladas:</strong>
+                        <ul>
+                            <li>Juego de <strong>llaves punta corona métricas (10, 12, 14, 17, 19 y 22 mm)</strong> para desacople de bulbos, varillaje de gobernador y terminales.</li>
+                            <li>Juego de <strong>destornilladores de precisión (2.5 mm y 3.5 mm) con aislación eléctrica certificada (1000V)</strong>, de uso estricto y obligatorio para intervenir las borneras K1 y K6 del controlador APM303 sin generar cortocircuitos por proximidad.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Apriete de Precisión (Torque):</strong>
+                        <ul>
+                            <li><strong>Torquímetro de rango bajo (1.0 a 10.0 kg·m)</strong> con calibración vigente. De uso obligatorio para la correcta instalación y asentamiento de las arandelas de cobre en el bloque. Los valores exigidos por el manual del fabricante Doosan son:
+                                <br>- Tornillería de soportes de actuador (M10, Grado 8.8): <strong>4.4 kg·m</strong>.
+                                <br>- Sensores de temperatura y presión (hilos M14x1.5): <strong>4.1 a 4.3 kg·m</strong>.
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Insumos Químicos:</strong> Solvente limpiador de contactos electrónicos de secado rápido (con HDS a la vista) y sellador de roscas de teflón líquido de grado industrial.</li>
                 </ul>
-
-                <h3>Herramientas y Metrología Requerida (4.0 HH)</h3>
-                <ul>
-                    <li>Torquímetro de rango bajo (calibrado).</li>
-                    <li>Galgas de espesores (0.05 a 1.0 mm).</li>
-                    <li>Multímetro True-RMS y Destornilladores aislados 1000V.</li>
-                    <li>Llaves corona (10 a 22 mm).</li>
-                </ul>
             </div>
 
-            <!-- 2. TABLA FMECA -->
-            <div class="section-card">
-                <h2>📊 2. Criticidad de Componentes</h2>
-                <table>
-                    <tr>
-                        <th>Subconjunto</th>
-                        <th>NPR</th>
-                        <th>Estado</th>
-                        <th>Falla principal</th>
-                    </tr>
-                    <tr><td>Regulador Velocidad</td><td style="color:#d9534f; font-weight:bold;">96</td><td>Crítico</td><td>Inestabilidad / Overspeed</td></tr>
-                    <tr><td>Sensores (P/T)</td><td style="color:#d9534f; font-weight:bold;">128</td><td>Crítico</td><td>Anula protección (Shutdown)</td></tr>
-                    <tr><td>APM303</td><td style="color:#d9534f; font-weight:bold;">48*</td><td>Crítico</td><td>Falla CPU. Deja red sin respaldo.</td></tr>
-                    <tr><td>Parada Emergencia</td><td style="color:#d9534f; font-weight:bold;">144</td><td>Crítico</td><td>Falla oculta de contactos NC.</td></tr>
-                </table>
+            <div class="img-placeholder">
+                <img src="foto_limpieza.jpg" alt="Conexiones traseras del tablero">
+                <p><em>Figura 1: Arquitectura de conexiones traseras y distribución de borneras de control K1 y medición K6 del APM303.</em></p>
             </div>
 
-            <!-- 3. PROCEDIMIENTO (Enfocado en Imágenes) -->
+            <!-- 2. PROCEDIMIENTO PASO A PASO -->
             <div class="section-card">
-                <h2>🛠️ 3. Rutina de Mantenimiento</h2>
+                <h2>⚙️ 2. Procedimiento de Mantenimiento (Paso a Paso)</h2>
 
                 <div class="step-block">
-                    <h3>Paso 1: Controlador APM303 y Parada de Emergencia</h3>
-                    <ul>
-                        <li>Verificar Energía Cero en bornes K1/K6.</li>
-                        <li>Limpiar contactos traseros con solvente dieléctrico.</li>
-                        <li>Medir continuidad óhmica en contactos NC de la Parada de Emergencia.</li>
-                    </ul>
+                    <h3>Fase 1: Preparación, Análisis de Riesgo (ART) y Aislamiento de Energías</h3>
+                    <p>Tramitar y documentar en el sitio el <strong>Análisis Previo del Riesgo (ART)</strong> pertinente a instrumentación y el Permiso de Trabajo Eléctrico. Verificar en la HDS del solvente las indicaciones para evitar intoxicación y asegurar correcta <strong>ventilación y atmósfera</strong>. Proceder al aislamiento eléctrico: apagar el controlador, dirigirse a las baterías y desconectar obligatoriamente el borne negativo (-) instalando candados LOTO. Verificar Energía Cero con multímetro en bornes K1/K6. Esta acción previene categóricamente el <strong>arranque inesperado al barrar el motor</strong>.</p>
                 </div>
+
+                <div class="step-block">
+                    <h3>Fase 2: Intervención del Tablero de Control y Parada de Emergencia</h3>
+                    <p>Tras asegurar la equipotencialidad personal usando pulsera <strong>EPP específico (ESD)</strong>, abrir la consola del tablero usando destornilladores aislados. Retirar los conectores traseros (Fig. 1) y aplicar solvente dieléctrico sobre los pines K1/K6 para remover oxidación. Inspeccionar las pistas de la placa base buscando indicios de fatiga térmica. Seguidamente, examinar mecánicamente el botón de <strong>Parada de Emergencia</strong>; desconectar sus terminales y medir continuidad óhmica con el multímetro en sus polos Normalmente Cerrados (NC) pulsando y reseteando, descartando así fallas ocultas que impidan su accionamiento en una crisis.</p>
+                </div>
+
+                <div class="step-block">
+                    <h3>Fase 3: Mantenimiento del Regulador de Velocidad y Calibración del "Air Gap"</h3>
+                    <p>Con el motor asegurado contra giros, verificar la suavidad de la varilla de transferencia del actuador del gobernador hacia la bomba de inyección. Usando llave de 22mm, aflojar la contratuerca y extraer el <em>Magnetic Speed Sensor</em> (Pickup) de la carcasa del volante de inercia. Limpiar los residuos ferrosos de la punta magnética. Para su calibración exacta: roscar el sensor a mano suavemente hasta que la punta haga contacto físico con la cresta de un diente del volante de inercia. Desde este punto referencial, retroceder el sensor girándolo en sentido antihorario exactamente 3/4 de vuelta para garantizar el <strong>"Air Gap" estipulado por Doosan de 0.45 mm</strong> (Verificable con Galgas de Espesores). Asegurar la posición fijando la contratuerca a 5.6 kg.m.</p>
+                </div>
+
+                <div class="img-placeholder">
+                    <img src="foto_pickup.jpg" alt="Ajuste de Sensor Magnético">
+                    <p><em>Figura 2: Posición del actuador electrónico y esquema metrológico de ajuste de la luz libre (Air gap) del sensor de velocidad.</em></p>
+                </div>
+
+                <div class="step-block">
+                    <h3>Fase 4: Extracción y Torque de Sensores de Temperatura y Presión</h3>
+                    <p>Certificar mediante termometría la completa disipación de la <strong>energía térmica</strong> en el bloque. Aflojar los bulbos sensores (llave corona de 19mm) de forma milimétrica utilizando paños industriales para despresurizar controladamente fluidos residuales. Retirar los sensores defectuosos empleando guantes de cuero. Limpiar minuciosamente las roscas del bloque eliminando restos de sellante. Aplicar sellador de teflón líquido a los hilos M14x1.5 del sensor nuevo y montar utilizando el torquímetro, aplicando un par de apriete exacto de <strong>4.1 a 4.3 kg·m</strong> para asentar la arandela sin fracturar la rosca. Conectar arneses y clips.</p>
+                </div>
+
+                <div class="img-placeholder">
+                    <img src="foto_sensores.jpg" alt="Sensores del Motor Doosan">
+                    <p><em>Figura 3: Posicionamiento técnico y arquitectura de los sensores de instrumentación en el bloque de cilindros Doosan.</em></p>
+                </div>
+
+                <div class="step-block">
+                    <h3>Fase 5: Cierre Perimetral y Gestión de Residuos Peligrosos</h3>
+                    <p>Consolidar todo sensor o componente electrónico sustituido, junto con los paños industriales saturados de fluidos o solventes, en tambores herméticos codificados para Residuos Peligrosos (RESPEL). Esta disposición de <strong>gestión de residuos peligrosos</strong> se ejecuta en cumplimiento riguroso de las directrices del <strong>Anexo I del MARPOL</strong>, garantizando la segregación e impidiendo la contaminación accidental de las sentinas del buque.</p>
+                </div>
+            </div>
+            
+            <!-- 3. PANTALLAS DEL CONTROLADOR APM303 -->
+            <div class="section-card">
+                <h2>🖥️ 3. Interfaz y Menús del Controlador APM303</h2>
+                <p>Las siguientes corresponden a las 7 pantallas principales de monitoreo y visualización de parámetros que entrega el panel APM303. Asegúrese de revisar la telemetría correspondiente tras el recomisionamiento.</p>
                 
-                <div class="img-placeholder">
-                    <div class="img-instruction">📷 Añadir: Captura de pantalla del menú principal / estados del APM303</div>
-                    <img src="apm303_pantalla.jpg" alt="Pantalla Frontal APM303">
-                </div>
-                <div class="img-placeholder">
-                    <div class="img-instruction">📷 Añadir: Foto de las conexiones traseras K1/K6 del controlador</div>
-                    <img src="apm303_trasero.jpg" alt="Conexiones APM303">
-                </div>
-
-                <div class="step-block">
-                    <h3>Paso 2: Gobernador y Sensor Magnético (Pickup)</h3>
-                    <ul>
-                        <li>Revisar fluidez del varillaje del actuador en bomba de inyección.</li>
-                        <li>Retirar Pickup del volante de inercia y limpiar limaduras.</li>
-                        <li><strong>Calibración:</strong> Enroscar hasta topar con diente de engranaje (0 mm).</li>
-                        <li>Retroceder exactamente <strong>3/4 de vuelta</strong> en sentido antihorario.</li>
-                        <li>Verificar <strong>Air Gap a 0.45 mm</strong> con galgas y fijar contratuerca.</li>
-                    </ul>
-                </div>
-
-                <div class="img-placeholder">
-                    <div class="img-instruction">📷 Añadir: Foto o esquema del Gobernador / Ajuste del Pickup</div>
-                    <img src="gobernador_pickup.jpg" alt="Ajuste Pickup">
-                </div>
-
-                <div class="step-block">
-                    <h3>Paso 3: Sensores de Presión y Temperatura</h3>
-                    <ul>
-                        <li>Extraer sensores defectuosos con llave 19mm.</li>
-                        <li>Limpiar roscas y aplicar sellador de teflón líquido.</li>
-                        <li><strong>Torque estricto:</strong> Instalar sensores M14x1.5 aplicando <strong>4.1 a 4.3 kg·m</strong>.</li>
-                        <li>Desechar sensores antiguos como RESPEL (Norma MARPOL).</li>
-                    </ul>
-                </div>
-
-                <div class="img-placeholder">
-                    <div class="img-instruction">📷 Añadir: Captura de pantalla APM303 mostrando valores mecánicos (Temp/Presión)</div>
-                    <img src="apm303_sensores.jpg" alt="Lectura Sensores APM303">
-                </div>
-            </div>
-
-            <!-- 4. CHECKLIST -->
-            <div class="section-card">
-                <h2>✅ 4. Re-comisionamiento</h2>
-                <div class="checklist-container" id="final-checklist">
-                    <label class="check-item"><input type="checkbox" class="final-check"> <span><strong>Retiro LOTO:</strong> Reconexión de baterías (positivo primero).</span></label>
-                    <label class="check-item"><input type="checkbox" class="final-check"> <span><strong>APM303:</strong> Inicialización sin reportes de error EEPROM/CPU.</span></label>
-                    <label class="check-item"><input type="checkbox" class="final-check"> <span><strong>Emergencia:</strong> Botón accionado y reseteado físicamente sin atascos.</span></label>
-                    <label class="check-item"><input type="checkbox" class="final-check"> <span><strong>Gobernador:</strong> Motor estable a 1500 RPM / 50 Hz sin oscilación (Hunting).</span></label>
-                    <label class="check-item"><input type="checkbox" class="final-check"> <span><strong>Sensores:</strong> Presión aceite >0.5 bar. Alarma térmica seteada a 103°C. Cero fugas.</span></label>
-                </div>
-
-                <button id="btn-finish" class="btn-submit btn-success" onclick="finishMaintenance()">Finalizar Mantención</button>
-                
-                <div id="success-section" style="display:none; text-align:center; margin-top: 25px;">
-                    <h3 style="color: #28a745;">✅ Mantención finalizada. Parámetros Nominales OK.</h3>
-                    <div class="img-placeholder" style="border-color: #28a745;">
-                        <div class="img-instruction" style="color: #28a745; border-color: #28a745;">📷 Añadir: Captura de pantalla APM303 en modo "AUTO" operativo</div>
-                        <img src="apm303_ok.jpg" alt="Generador Operativo">
+                <div class="screens-grid">
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_1.jpg'</div>
+                        <img src="pantalla_1.jpg" alt="Pantalla 1 - Resumen General">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_2.jpg'</div>
+                        <img src="pantalla_2.jpg" alt="Pantalla 2 - Mediciones Eléctricas">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_3.jpg'</div>
+                        <img src="pantalla_3.jpg" alt="Pantalla 3 - Frecuencia y RPM">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_4.jpg'</div>
+                        <img src="pantalla_4.jpg" alt="Pantalla 4 - Potencia Generada">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_5.jpg'</div>
+                        <img src="pantalla_5.jpg" alt="Pantalla 5 - Presión y Temperatura del Motor">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_6.jpg'</div>
+                        <img src="pantalla_6.jpg" alt="Pantalla 6 - Horómetro y Batería">
+                    </div>
+                    
+                    <div class="img-placeholder">
+                        <div class="img-instruction">📷 Reemplaza con 'pantalla_7.jpg'</div>
+                        <img src="pantalla_7.jpg" alt="Pantalla 7 - Historial de Alarmas">
                     </div>
                 </div>
+            </div>
+
+            <!-- 4. CHECKLIST PUESTA EN SERVICIO Y BOTÓN INTERACTIVO -->
+            <div class="section-card">
+                <h2>✅ 4. Protocolo de Re-comisionamiento y Pruebas Funcionales</h2>
+                <p>Ejecute una inspección visual sistemática y confirme marcando <strong>absolutamente todos</strong> los siguientes parámetros operativos antes de restituir el control del tablero a modo automático y dar por finalizado el servicio.</p>
+
+                <div class="checklist-container" id="final-checklist">
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>1. Área Despejada:</strong> Inspección visual 360° completada; paños retirados y herramientas métricas y dieléctricas contabilizadas y guardadas.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>2. Disposición Ambiental:</strong> Residuos de la mantención segregados y dispuestos en contenedores RESPEL en cumplimiento de MARPOL Anexo I.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>3. Desbloqueo LOTO:</strong> Retiro formal de candados y tarjetas. Reconexión de baterías de 24V (Borno positivo conectado primero, negativo al final para mitigar arcos eléctricos).</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>4. Secuencia de Inicialización:</strong> Tablero APM303 energizado correctamente; pantalla de inicio carga sin reportar anomalías de memoria EEPROM o fallas de CPU.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>5. Validación Parada Emergencia:</strong> Prueba física del botón "hongo" de Parada de Emergencia ejecutada con éxito, y reseteo manual completado sin atascos mecánicos.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>6. Maniobra de Arranque:</strong> Ejecución de arranque en modo MANUAL desde el tablero APM303. Desenganche acústico del motor de arranque confirmado en los tiempos nominales.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>7. Regulación de Velocidad (Actuador):</strong> Gobernador estabiliza el motor en régimen estacionario nominal de 1500 RPM y frecuencia de 50 Hz sin presentar oscilaciones de búsqueda (Hunting).</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>8. Instrumentación de Presión:</strong> Sensor de presión de aceite operativo sin fugas por la rosca, transmitiendo en tiempo real una lectura estabilizada por sobre <strong>0.50 bar</strong>.</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>9. Instrumentación Térmica:</strong> Sensor de temperatura de refrigerante operativo sin fugas, transmitiendo rampa de calentamiento normal (Límite crítico de "Shutdown" configurado a <strong>103°C</strong>).</span></label>
+                    <label class="check-item"><input type="checkbox" class="final-check"> <span style="margin-top: 3px;"><strong>10. Cierre Documental y Entrega:</strong> Firmas de cierre en el ART y cancelación del Permiso de Trabajo Eléctrico ejecutadas. El operador sitúa el selector del panel APM303 en modo AUTO.</span></label>
+                </div>
+
+                <!-- Botón de Confirmación -->
+                <button id="btn-finish" class="btn-submit btn-success" onclick="finishMaintenance()">Confirmar que está todo en orden y finalizar mantención</button>
+
+                <!-- Sección de Éxito (Oculta por defecto) -->
+                <div id="success-section" style="display:none; text-align:center; padding-top: 30px; border-top: 2px dashed #ddd; margin-top: 30px;">
+                    <h3 style="color: #28a745; margin-bottom: 10px; font-size: 1.5rem;">✅ Se finalizó la mantención con éxito.</h3>
+                    <p style="color: var(--primary-dark); font-weight: bold; margin-bottom: 25px;">El panel de control APM303 se debería ver como en la foto, indicando los parámetros operacionales nominales estables.</p>
+
+                    <div class="img-placeholder" style="margin: 0 auto; max-width: 600px; border-color: #28a745; border-style: solid;">
+                        <img src="foto_funcionando.jpg" alt="Pruebas de Funcionamiento exitosas en el APM303">
+                        <p style="margin-top: 15px; color: #555;"><em>Figura 4: Verificación final de parámetros en tiempo real en la pantalla del controlador APM303 tras el re-comisionamiento exitoso.</em></p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -282,31 +538,42 @@
 
     <script>
         const allQuestions = [
-            { q: "¿Cuántas personas como mínimo deben participar?", options: ["1 persona", "2 personas", "Sin mínimo"], ans: 1 },
-            { q: "¿Cuál es el primer paso obligatorio antes de intervenir?", options: ["Desconectar sensor", "Aplicar LOTO", "Dar arranque manual"], ans: 1 },
-            { q: "Al aplicar LOTO en baterías, ¿qué cable se desconecta primero?", options: ["Positivo", "Negativo (Tierra)", "Da igual"], ans: 1 },
-            { q: "¿Qué EPP se usa para manipular el panel APM303?", options: ["Guantes de cabritilla", "Pulsera/Guantes ESD", "Guantes térmicos"], ans: 1 },
-            { q: "Si encuentra un cable energizado pelado no previsto, ¿qué hace?", options: ["Lo aísla con cinta", "Sigue el trabajo", "Detiene el trabajo e informa"], ans: 2 }
+            { q: "Según el protocolo de seguridad para la intervención de este equipo, ¿cuántas personas como mínimo deben participar?", options: ["1 persona", "2 personas", "No hay mínimo"], ans: 1 },
+            { q: "Antes de intervenir el panel de control y sensores, ¿cuál es el primer paso obligatorio?", options: ["Desconectar un sensor", "Aplicar Bloqueo y Etiquetado (LOTO)", "Dar arranque manual"], ans: 1 },
+            { q: "Al aplicar LOTO en las baterías de 24V, ¿qué cable se debe desconectar primero para evitar cortocircuitos?", options: ["El cable positivo", "El cable de tierra (negativo)", "Cualquiera de los dos"], ans: 1 },
+            { q: "¿Qué característica de seguridad deben cumplir sus zapatos para intervenir el tablero de control?", options: ["Ser dieléctricos", "Tener suela de goma común", "Ser impermeables"], ans: 0 },
+            { q: "¿Qué EPP debe utilizar en sus manos al manipular placas electrónicas dentro del panel APM303?", options: ["Guantes de cabritilla", "Pulsera o guantes antiestáticos (ESD)", "Guantes de soldador"], ans: 1 },
+            { q: "Al intervenir sensores cerca del bloque inmediatamente después de que el motor se detiene, ¿qué EPP es vital?", options: ["Guantes quirúrgicos", "Guantes térmicos", "Cinta aislante en los dedos"], ans: 1 },
+            { q: "Tras colocar su candado LOTO, ¿cómo comprueba que el equipo es seguro para intervenir (Energía Cero)?", options: ["Midiendo con un multímetro", "Apretando el botón de encendido", "Confiando en la etiqueta"], ans: 0 },
+            { q: "¿Qué característica deben tener sus destornilladores y pinzas para trabajar en los bornes del equipo?", options: ["Punta imantada", "Aislación eléctrica certificada", "Ser de acero inoxidable puro"], ans: 1 },
+            { q: "Si en el Laboratorio de Máquinas hay otros motores operando cerca, ¿qué EPP es obligatorio?", options: ["Ninguno", "Tapones o fonos protectores auditivos", "Gorro de tela"], ans: 1 },
+            { q: "Si durante la inspección descubre un cable energizado pelado que no estaba en la pauta, ¿qué hace?", options: ["Lo corta", "Lo aísla con cinta y sigue el trabajo", "Detiene el trabajo, aísla la zona e informa al supervisor"], ans: 2 }
         ];
 
         let currentQuestions = [];
 
-        function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
 
         function loadQuiz() {
             document.getElementById('error-msg').style.display = 'none';
             const wrapper = document.getElementById('questions-wrapper');
             wrapper.innerHTML = '';
+
             document.querySelectorAll('.epp-check').forEach(cb => cb.checked = false);
-            currentQuestions = shuffle([...allQuestions]).slice(0, 3); // Reducido a 3 preguntas para agilizar
+
+            currentQuestions = shuffle([...allQuestions]).slice(0, 5);
 
             currentQuestions.forEach((item, index) => {
                 let html = `<div class="question">
-                    <h4>Q${index + 1}: ${item.q}</h4>
+                    <h4>Pregunta ${index + 1}: ${item.q}</h4>
                     <div class="options">`;
+
                 item.options.forEach((opt, i) => {
                     html += `<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`;
                 });
+
                 html += `</div></div>`;
                 wrapper.innerHTML += html;
             });
@@ -314,43 +581,68 @@
 
         function checkAnswers() {
             let eppComplete = true;
-            document.querySelectorAll('.epp-check').forEach(cb => { if (!cb.checked) eppComplete = false; });
-            let score = 0, answeredAll = true;
+            document.querySelectorAll('.epp-check').forEach(cb => {
+                if (!cb.checked) eppComplete = false;
+            });
 
-            for (let i = 0; i < currentQuestions.length; i++) {
+            let score = 0;
+            let answeredAll = true;
+
+            for (let i = 0; i < 5; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (!selected) { answeredAll = false; break; }
-                if (parseInt(selected.value) === currentQuestions[i].ans) score++;
+                if (!selected) {
+                    answeredAll = false;
+                    break;
+                }
+                if (parseInt(selected.value) === currentQuestions[i].ans) {
+                    score++;
+                }
             }
 
-            if (!answeredAll) { alert("Responda todas las preguntas."); return; }
-            if (!eppComplete) {
-                document.getElementById('error-msg').innerText = "⚠️ Confirme todo el EPP.";
-                document.getElementById('error-msg').style.display = 'block';
+            if (!answeredAll) {
+                alert("Por favor, responda las 5 preguntas antes de verificar los permisos.");
                 return;
             }
 
-            if (score === currentQuestions.length) {
+            if (!eppComplete) {
+                document.getElementById('error-msg').innerText = "⚠️ Protocolo Incompleto: Debe marcar y confirmar todos los elementos del EPP y la Indumentaria Personal.";
+                document.getElementById('error-msg').style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                return;
+            }
+
+            if (score === 5 && eppComplete) {
                 document.getElementById('survey-container').style.display = 'none';
                 document.getElementById('manual-container').style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                document.getElementById('error-msg').innerText = "⚠️ Test fallido. Repase el protocolo.";
+                document.getElementById('error-msg').innerHTML = "⚠️ Evaluación de Seguridad Fallida. Ha respondido incorrectamente " + (5 - score) + " pregunta(s). Haga clic aquí para repasar el protocolo y volver a intentarlo.";
                 document.getElementById('error-msg').style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }
         }
 
+        // Función del Botón Final Interactivo
         function finishMaintenance() {
             let allChecked = true;
-            document.querySelectorAll('.final-check').forEach(cb => { if(!cb.checked) allChecked = false; });
-            
+            const checks = document.querySelectorAll('.final-check');
+            checks.forEach(cb => {
+                if(!cb.checked) allChecked = false;
+            });
+
             if(!allChecked) {
-                alert("Debe validar físicamente todos los parámetros de re-comisionamiento.");
+                alert("Atención Técnica: No es posible finalizar. Debe validar físicamente, marcar y confirmar todos los 10 pasos del protocolo de re-comisionamiento para dar por finalizada la mantención.");
                 return;
             }
-            
+
+            // Ocultar el botón de confirmación y mostrar la sección de éxito
             document.getElementById('btn-finish').style.display = 'none';
             document.getElementById('success-section').style.display = 'block';
+
+            // Auto-scroll suave para revelar la foto y el mensaje final
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
         }
 
         window.onload = loadQuiz;
